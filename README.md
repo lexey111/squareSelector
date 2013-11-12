@@ -6,7 +6,7 @@ What is it?
 
 This is replacement of standard selector control. I made it for one of my projects where I needed a compact and good-looking drop-down list.
 
-You can read more about it on my blog (http://lexey111.blogspot.com/2013/11/waitrotator.html)
+You can read more about it on my blog (http://lexey111.blogspot.com/2013/11/squareselector.html)
 
 Valid for
 ---------
