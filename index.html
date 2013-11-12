@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>SquareSelector Example page &middot; Lexey111</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Lexey111">
+
+    <!-- CSS -->
+    <link href="css/ss-examples.css" rel="stylesheet">
+    <link href="./css/square-selector.css" rel="stylesheet">
+</head>
+<body>
+<div id="wrapper">
+<div id="demo-pane">
+<h1>SquareSelector example page</h1>
+
+<p class="powered">
+    Powered by <a href="http://http://jquery.com//" target="_blank">
+    <img width="16" height="16" title="jQuery" alt="jQuery"
+         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAACbElEQVQ4jbWRS0hUcRTGv/v0zr33f2d0NGvKsoxSUQi1SNsFClLmKoIeEkRGhNGDVi26bqxlRYgQ2qIi0LBm0UuGgiikh0RYVCo4OjLO21Hnced5W821TAmCvtXhO///j/OdA/w3qSpt1Ee69qz2jF7RbW/n+CnpMACguSOPbLBd/jvgkLrbqIO2fXx+QRkAQLbqprXFDWWDn6tWBxxUK3mitOZMId9cw1ktOwAAA2qStyjXKUV+Uv0tWrsUsZ83ADTDnuMJyeZ6nLUgzBPSWPLgjQ0AZo43dLJmpY+WhZfln/zv199/OyT4vMcMAGcm9awsbcwBTIUWByuJIsMrt9CvM6Ao/fvOos5sdrE05Qucjk/6T2jdHb3GNPLF3rHCa/ZZqK/YnLfx3oe7Zc/H9Ip33scVzui6P8KrdwQAYAGAIdIEYzI1lxTntbmAPgBIm6lTgiiU0pLQynKmxqrx6MNEIDSScHmpyKSrMjbhGtAABw0AvCg/Y0wCKI69utk+WgwA7pa6GBFL9rKScEVPZ+YyMa0tsxC7kQjPX0gGQkPa7bMOAKAAoODmU0UklglWFosYRRoV8s1NX3et8Rjj6jq9/fXUpoR7Vnf+eDENVTUWTi1lHtnPmk12hkg0SyQnS4STo9tkx0q3J12D1tT0FNF6zjupXxtbh8aPMkTqY4nIMUQCaGo4o2n21GLkY8YfCceDflvKE2yKuT1bovJMK1Q1TS2nl4/4azlF6qFFoS6bTCIdiSMdXkAyGIbmC0Bz+x7N+0Jt6D4T+S3CclXPpOqzi4kD6UikJjU3TyW8wS9xT3AgdKlleLU//6SfJkzj1hK4050AAAAASUVORK5CYII="/>
+    jQuery
+</a>
+    <br/>
+    &copy; 2013, <a href="http://lexey111.com">Lexey111</a>
+</p>
+
+<h2>
+    Selectors
+</h2>
+
+<p>
+    Here you can see live examples and detailed descriptions of SquareSelectors by Lexey111 (<a
+        href="http://lexey111.blogspot.com/2013/11/squareselector.html" target="_blank">blog article</a>).
+</p>
+
+
+<div id="selectors_container1"></div>
+<div class="clearfix"></div>
+<h2>
+    Extra styles and examples
+</h2>
+
+<div id="selectors_container2">
+    <div class="sc_selector" id="scs1">
+        <span></span>
+
+        <p><a id="disable_enable_link" href="#">Switch button state</a></p>
+    </div>
+    <div class="sc_selector" id="scs2">
+        <span></span>
+
+        <p><a id="disable_orange_link" href="#">Switch Orange item state</a></p>
+    </div>
+    <div class="sc_selector" id="scs3">
+        <span></span>
+
+        <p>Round-rotating</p>
+    </div>
+    <div class="sc_selector" id="scs4">
+        <span></span>
+
+        <p>Rounded</p>
+
+        <p><a id="rebuild_link" href="#">Rebuild whole list</a></p>
+    </div>
+</div>
+<div class="clearfix"></div>
+<p>
+    Descriptions of methods you can see below, in the <a href="#pm">Public methods</a> section, as well as examples of
+    code.
+</p>
+
+<div class="clearfix"></div>
+
+<h2>Require</h2>
+
+<p>
+    jQuery 1.8+. Making a 'vanilla' version isn't big deal, but in practice I use these controls where jQuery already
+    used a lot anyway.
+</p>
+
+<h2>Valid for (i.e. tested in)</h2>
+<ul>
+    <li>Chrome (webkit) 24+</li>
+    <li>Opera 12.15+</li>
+    <li>Firefox 20+</li>
+    <li>IE 10+</li>
+</ul>
+
+
+<h2>Known weakness point</h2>
+
+<p>
+    List does not check available size, i.e. you have to check is enough place at the bottom and side to show list in
+    open state. It is doesn't matter for my projects so I don't care yet.
+</p>
+
+<h2>Elements</h2>
+
+<img src="img/ss_example1.png?v=1" alt=""/>
+<img src="img/ss_example2.png?v=2" alt=""/>
+
+<h2>How to use</h2>
+
+<p>
+    SquareSelector is a runtime-creation kind of UI controls. This mean that you have to make new Javascript object to
+    use it.
+</p>
+
+<p>
+    First step is prepare container for item(s) in html-file. Next, you need to call constructor explicitly to make and
+    embed selector to the prepared place.
+</p>
+
+<p>
+    Usual way to do this is something like (in documentReady function or later):
+</p>
+
+<p class="example-header">Usage example</p>
+<pre style="color:#fff">    <span style="color:#ffee80">var</span> item_container <span style="color:#ff9d00">=</span> $<span
+        style="color:#e1efff">(</span>'#selectors_container1'<span style="color:#e1efff">)</span>;
+    <span style="color:#ffee80">var</span> selector1 <span style="color:#ff9d00">=</span> <span style="color:#ffee80">new</span> LxSquareSelector<span
+            style="color:#e1efff">(</span><span
+            style="color:#e1efff">{</span>
+        <span style="color:#ff628c">container</span>: item_container<span style="color:#e1efff">,</span>
+        <span style="color:#ff628c">title</span>: 'Size'<span style="color:#e1efff">,</span>
+        <span style="color:#ff628c">subtitle</span>: 'of paper'<span
+            style="color:#e1efff">,</span>
+        <span style="color:#ff628c">active</span>: '90x90'<span
+            style="color:#e1efff">,</span>
+        <span style="color:#ff628c">list</span>: [
+            <span style="color:#e1efff">{</span>
+                <span style="color:#ff628c">value</span>: '50x50'<span
+            style="color:#e1efff">,</span>
+                <span style="color:#ff628c">display</span>: '5x5cm'<span
+            style="color:#e1efff">,</span>
+                <span style="color:#ff628c">line</span>: '5x5 cm <span
+            style="color:#e1efff">(</span>tiny glass<span style="color:#e1efff">)</span>'
+            <span style="color:#e1efff">}</span><span style="color:#e1efff">,</span>
+            <span style="color:#e1efff">{</span>
+                <span style="color:#ff628c">value</span>: '70x70'<span
+            style="color:#e1efff">,</span>
+                <span style="color:#ff628c">display</span>: '7x7cm'<span
+            style="color:#e1efff">,</span>
+                <span style="color:#ff628c">line</span>: '7x7 cm <span
+            style="color:#e1efff">(</span>coffee or tea cup<span
+            style="color:#e1efff">)</span>'
+            <span style="color:#e1efff">}</span><span style="color:#e1efff">,</span>
+            <span style="color:#e1efff">{</span>
+                <span style="color:#ff628c">value</span>: '90x90'<span
+            style="color:#e1efff">,</span>
+                <span style="color:#ff628c">display</span>: '9x9cm'<span
+            style="color:#e1efff">,</span>
+                <span style="color:#ff628c">line</span>: '9x9 cm <span
+            style="color:#e1efff">(</span>standard<span style="color:#e1efff">)</span>'
+            <span style="color:#e1efff">}</span><span style="color:#e1efff">,</span>
+            <span style="color:#e1efff">{</span>
+                <span style="color:#ff628c">value</span>: '90x50'<span
+            style="color:#e1efff">,</span>
+                <span style="color:#ff628c">display</span>: '9x5cm'<span
+            style="color:#e1efff">,</span>
+                <span style="color:#ff628c">line</span>: '9x5 cm <span
+            style="color:#e1efff">(</span>business card<span style="color:#e1efff">)</span>'
+            <span style="color:#e1efff">}</span>
+        ]<span style="color:#e1efff">,</span>
+        <span style="color:#ff628c">callback</span>: function <span style="color:#e1efff">(</span>value<span
+            style="color:#e1efff">)</span> <span style="color:#e1efff">{</span>
+            <span style="color:#ffee80">alert</span><span style="color:#e1efff">(</span>'Selected paper: ' <span
+            style="color:#ff9d00">+</span> value<span style="color:#e1efff">)</span>;
+        <span style="color:#e1efff">}</span>
+    <span style="color:#e1efff">}</span><span style="color:#e1efff">)</span>;
+</pre>
+
+<p>
+    If you don't need future interaction with the control except callback function on changing, you can use simple
+    constructions like <b>new LxSquareSelector({...})</b>
+</p>
+
+<p>
+    If you're planning works with selector's methods, you have to
+    keep it into variable <b>var my_selector = new LxSquareSelector({...})</b> and call published methods later, e.g.,
+    <b>my_selector.disable()</b>
+</p>
+
+<p>
+    Anyway, you have to set up control's properties, such as:
+</p>
+<table>
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Optional</th>
+            <th>Type</th>
+            <th>What does it mean</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>container</td>
+            <td>No</td>
+            <td>string|object</td>
+            <td>jQuery selector (jQuery object or text) of parent container for button</td>
+        </tr>
+        <tr>
+            <td>active</td>
+            <td>No</td>
+            <td>string</td>
+            <td>currently selected VALUE (not display)</td>
+        </tr>
+        <tr>
+            <td>list</td>
+            <td>No</td>
+            <td>array of objects</td>
+            <td>Array of dropdown list items, see next table</td>
+        </tr>
+        <tr>
+            <td>title</td>
+            <td>Yes</td>
+            <td>string</td>
+            <td>Top text line</td>
+        </tr>
+        <tr>
+            <td>disabled</td>
+            <td>Yes</td>
+            <td>boolean</td>
+            <td><b>true</b> or <b>false</b>, state of button. Default value is <b>false</b></td>
+        </tr>
+        <tr>
+            <td>subtitle</td>
+            <td>Yes</td>
+            <td>string</td>
+            <td>Bottom text line</td>
+        </tr>
+        <tr>
+            <td>class_name</td>
+            <td>Yes</td>
+            <td>string</td>
+            <td>
+                Additional class name that will be added to the button while construction. Predefined classes:
+                <ul>
+                    <li>green-button &mdash; button with green background</li>
+                    <li>red-button &mdash; button with red background</li>
+                    <li>blue-button &mdash; button with blue background</li>
+                    <li>round-button &mdash; round button</li>
+                    <li>round-button-animated &mdash; round button that rotate borders on hover (works only in modern
+                        browsers)
+                    </li>
+                    <li>rounded-button &mdash; button with rounded corners</li>
+                    <li>giant-button &mdash; button with size x2</li>
+                </ul>
+
+            </td>
+        </tr>
+        <tr>
+            <td>custom_item</td>
+            <td>Yes</td>
+            <td>string</td>
+            <td>
+                Additional element that will be inserted inside button while construction. This is useful when you want
+                to make color chooser, for example. You can see how it works
+                <a href="http://lexey111.com/examples/cv/builder.php" target="_blank">here</a> (click red button on the
+                top of page, then change background to solid color).
+            </td>
+        </tr>
+        <tr>
+            <td>callback</td>
+            <td>Yes</td>
+            <td>function</td>
+            <td>Callback function that calls whan value changed</td>
+        </tr>
+        <tr>
+            <td>list_header</td>
+            <td>Yes</td>
+            <td>string</td>
+            <td>Header of dropdown list</td>
+        </tr>
+        <tr>
+            <td>list_footer</td>
+            <td>Yes</td>
+            <td>string</td>
+            <td>Footer of dropdown list</td>
+        </tr>
+        <tr>
+            <td>list_width</td>
+            <td>Yes</td>
+            <td>string</td>
+            <td>Width of dropdown list in <b>px</b>. Default value is <b>200px</b></td>
+        </tr>
+        <tr>
+            <td>list_align</td>
+            <td>Yes</td>
+            <td>string</td>
+            <td>Alignment of dropdown list relative to the button: left, right or center. Default value is <b>center</b>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<p>And, last but not least, the list items itself:</p>
+<table>
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Optional</th>
+            <th>What does it mean</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>value</td>
+            <td>No</td>
+            <td>Value</td>
+        </tr>
+        <tr>
+            <td>display</td>
+            <td>Yes</td>
+            <td>Short display value - what users see on the button. If nothing set, then the <b>value</b> will be used.
+            </td>
+        </tr>
+        <tr>
+            <td>line</td>
+            <td>Yes</td>
+            <td>Long display value - what user see in the list</td>
+        </tr>
+        <tr>
+            <td>separated</td>
+            <td>Yes</td>
+            <td><b>true</b> or <b>false</b>, is this line will be separated from others? (default value is <b>false</b>)
+            </td>
+        </tr>
+        <tr>
+            <td>disabled</td>
+            <td>Yes</td>
+            <td><b>true</b> or <b>false</b>, is this line will be disabled? (default value is <b>false</b>)</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+    If list contains only one value, this makes simple button (see example above, green and blue buttons).
+</p>
+
+<a href="#" name="pm"></a>
+
+<h2>Public methods</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Method</th>
+            <th>Parameters</th>
+            <th>What does it mean</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>actualize(value)</td>
+            <td><b>value</b>, string</td>
+            <td>
+                Set current button value according to given one
+            </td>
+        </tr>
+
+        <tr>
+            <td>disable()</td>
+            <td>&mdash;</td>
+            <td>Disable button</td>
+        </tr>
+
+        <tr>
+            <td>enable()</td>
+            <td>&mdash;</td>
+            <td>Enable button</td>
+        </tr>
+
+        <tr>
+            <td>disabled()</td>
+            <td>&mdash;</td>
+            <td>
+                Return <b>true</b> or <b>false</b> according to current state of selector (whole button)
+                <p class="example-header" style="width: 100%">Usage example: <b>button get state and disable/enable</b>
+                </p>
+        <pre style="width: 100%">
+    <span style="color:#ffee80">var</span> example_selector_1 <span style="color:#ff9d00">=</span> <span
+                style="color:#ff9d00">new</span> <span
+                style="color:#fd0">LxSquareSelector</span>({...})<span style="color:#e1efff">;</span>
+
+    ...
+
+    <span style="color:#ff9d00">if</span> (example_selector_1.<span style="color:#eb939a">disabled</span>()){
+        example_selector_1.enable()<span style="color:#e1efff">;</span>
+    } <span style="color:#ff9d00">else</span> {
+        example_selector_1.disable()<span style="color:#e1efff">;</span>
+    }</pre>
+            </td>
+        </tr>
+
+        <tr>
+            <td>disableItem(value)</td>
+            <td><b>value</b>, string</td>
+            <td>Disable item</td>
+        </tr>
+
+        <tr>
+            <td>enableItem(value)</td>
+            <td><b>value</b>, string</td>
+            <td>Enable item</td>
+        </tr>
+
+        <tr>
+            <td>itemDisabled(value)</td>
+            <td><b>value</b>, string</td>
+            <td>
+                Return <b>true</b> or <b>false</b> according to current state of passed item
+                <p class="example-header" style="width: 100%">Usage example: <b>item get state and disable/enable</b>
+                </p>
+    <pre style="width: 100%">
+    <span style="color:#ffee80">var</span> example_selector_2 <span style="color:#ff9d00">=</span> <span
+            style="color:#ff9d00">new</span> <span
+            style="color:#fd0">LxSquareSelector</span>({...})<span style="color:#e1efff">;</span>
+
+    ...
+
+    <span style="color:#ff9d00">if</span> (example_selector_2.itemDisabled(<span
+            style="color:#3ad900">'orange'</span>)){
+        example_selector_2.enableItem(<span style="color:#3ad900">'orange'</span>)<span style="color:#e1efff">;</span>
+    } <span style="color:#ff9d00">else</span> {
+        example_selector_2.disableItem(<span style="color:#3ad900">'orange'</span>)<span style="color:#e1efff">;</span>
+    }
+</pre>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>rebuild(list, active_value)</td>
+            <td>
+                <b>list</b>, array
+                <br/>of objects;
+                <br/><b>active_value</b>,
+                <br/>string
+            </td>
+            <td>
+                Rebuild list
+                <p class="example-header" style="width: 100%">Usage example: <b>rebuild whole list and set new active
+                                                                                value</b></p>
+        <pre style="width: 100%">
+    <span style="color:#ffee80">var</span> example_selector_3 <span style="color:#ff9d00">=</span> <span
+                style="color:#ff9d00">new</span> <span style="color:#fd0">LxSquareSelector</span>({...})<span
+                style="color:#e1efff">;</span>
+    ...
+    <span style="color:#ffee80">var</span> new_list <span style="color:#ff9d00">=</span> [
+        {
+            value: <span style="color:#3ad900">'owl'</span>,
+            display: <span style="color:#3ad900">'Owl'</span>,
+            line: <span style="color:#3ad900">'Polar owl'</span>
+        },
+        {
+            value: <span style="color:#3ad900">'sparrow'</span>,
+            display: <span style="color:#3ad900">'Sparrow'</span>,
+            line: <span style="color:#3ad900">'Jack the Sparrow'</span>
+        },
+        {
+            value: <span style="color:#3ad900">'goose'</span>,
+            display: <span style="color:#3ad900">'Goose'</span>,
+            line: <span style="color:#3ad900">'Gray goose'</span>
+        },
+        {
+            value: <span style="color:#3ad900">'martlet'</span>,
+            display: <span style="color:#3ad900">'Martlet'</span>,
+            line: <span style="color:#3ad900">'Fast martlet'</span>
+        }
+    ]<span style="color:#e1efff">;</span>
+    example_selector_3.rebuild(new_list, <span style="color:#3ad900">'sparrow'</span>)<span
+                style="color:#e1efff">;</span>
+</pre>
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+
+<h2>LESS-file property list to customize appearance</h2>
+<table>
+<thead>
+    <tr>
+        <th>Property</th>
+        <th>Default value</th>
+        <th>What does it mean</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td class="subheader" colspan="3">
+        Sizes
+    </td>
+</tr>
+
+<tr>
+    <td>square_size</td>
+    <td>80px</td>
+    <td>Button size</td>
+</tr>
+<tr>
+    <td>border_size</td>
+    <td>4px</td>
+    <td>Size of semitransparent border around dropdown list</td>
+</tr>
+<tr>
+    <td>corner_triangle_size</td>
+    <td>10px</td>
+    <td>Size of triangle in botom right corner (dropdown mark)</td>
+</tr>
+<tr>
+    <td>top_arrow_size</td>
+    <td>8px</td>
+    <td>Size of top arrow on dropdown list (white pointing arrow)</td>
+</tr>
+<tr>
+    <td>button_border_radius_size</td>
+    <td>0px</td>
+    <td>Roundness of the button's corners</td>
+</tr>
+<tr>
+    <td>list_border_radius_size</td>
+    <td>0px</td>
+    <td>Roundness of corners of the dropdown list</td>
+</tr>
+<tr>
+    <td>list_item_height</td>
+    <td>2.2em</td>
+    <td>Height of list item</td>
+</tr>
+
+<tr>
+    <td class="subheader" colspan="3">
+        Normal state colors (not hovered or opened)
+    </td>
+</tr>
+
+<tr>
+    <td>normal_background_color</td>
+    <td><span class="color_example" style="background-color: #f8f8fe"></span>#f8f8fe</td>
+    <td>Background of the button</td>
+</tr>
+
+<tr>
+    <td>normal_border_color</td>
+    <td><span class="color_example" style="background-color: #ddd"></span>#dddddd</td>
+    <td>Border color</td>
+</tr>
+
+<tr>
+    <td>normal_title_color</td>
+    <td><span class="color_example" style="background-color: #828f94"></span>#828f94</td>
+    <td>Color of top and bottom text lines</td>
+</tr>
+
+<tr>
+    <td>normal_value_color</td>
+    <td><span class="color_example" style="background-color: #3a778b"></span>#3a778b</td>
+    <td>Color of the current value (line in the middle)</td>
+</tr>
+
+<tr>
+    <td>normal_corner_triangle_color</td>
+    <td><span class="color_example" style="background-color: #aaa"></span>#aaaaaa</td>
+    <td>Color of the bottom right triangle</td>
+</tr>
+
+<tr>
+    <td>list_shadow</td>
+    <td>0 0 6px rgba(0,0,0,.3)</td>
+    <td>Shadow under the dropped-down list</td>
+</tr>
+
+<tr>
+    <td class="subheader" colspan="3">
+        Disabled state colors
+    </td>
+</tr>
+
+<tr>
+    <td>disabled_background_color</td>
+    <td><span class="color_example" style="background-color: #f1f1f7"></span>#f1f1f7</td>
+    <td>Button background in disabled state</td>
+</tr>
+
+<tr>
+    <td>disabled_border_color</td>
+    <td><span class="color_example" style="background-color: #e3e3e9"></span>#e3e3e9</td>
+    <td>Border color</td>
+</tr>
+
+<tr>
+    <td>disabled_title_color</td>
+    <td><span class="color_example" style="background-color: #c0c0c0"></span>#c0c0c0</td>
+    <td>Title (top and bottom lines) color</td>
+</tr>
+
+<tr>
+    <td>disabled_value_color</td>
+    <td><span class="color_example" style="background-color: #a2a2a2"></span>#a2a2a2</td>
+    <td>Current value color</td>
+</tr>
+
+<tr>
+    <td>disabled_corner_triangle_color</td>
+    <td><span class="color_example" style="background-color: #d5d5db"></span>#d5d5db</td>
+    <td>Color of the bottom right triangle</td>
+</tr>
+
+<tr>
+    <td>list_disabled_text_color</td>
+    <td><span class="color_example" style="background-color: #dde"></span>#ddddee</td>
+    <td>Text color of disabled item in the list</td>
+</tr>
+
+<tr>
+    <td class="subheader" colspan="3">
+        Dropdown menu colors
+    </td>
+</tr>
+
+<tr>
+    <td>list_background_color</td>
+    <td><span class="color_example" style="background-color: #fff"></span>#ffffff</td>
+    <td>Background of dropdown menu list</td>
+</tr>
+
+<tr>
+    <td>list_item_color</td>
+    <td><span class="color_example" style="background-color: #2c5a69"></span>#2c5a69</td>
+    <td>Text color of menu item</td>
+</tr>
+
+<tr>
+    <td>list_hover_color</td>
+    <td><span class="color_example" style="background-color: #0b697a"></span>#0b697a</td>
+    <td>Background color of menu item in "on-hover" state (text color = list_background_color)</td>
+</tr>
+
+<tr>
+    <td>list_separor_color</td>
+    <td><span class="color_example" style="background-color: #aaa"></span>#aaaaaa</td>
+    <td>Separator line color for list item with class="<b>separated</b>"</td>
+</tr>
+
+<tr>
+    <td>list_active_border_color</td>
+    <td><span class="color_example" style="background-color: #faa732"></span>#faa732</td>
+    <td>Border of the currently selected item</td>
+</tr>
+
+<tr>
+    <td>list_active_background_color</td>
+    <td><span class="color_example" style="background-color: #ffe89b"></span>#ffe89b</td>
+    <td>Background of the currently selected item</td>
+</tr>
+
+<tr>
+    <td>list_active_text_color</td>
+    <td><span class="color_example" style="background-color: #504c34"></span>#504c34</td>
+    <td>Text color of the currently selected item</td>
+</tr>
+
+<tr>
+    <td>list_hover_active_color</td>
+    <td><span class="color_example" style="background-color: #90a0c5"></span>#90a0c5</td>
+    <td>Background color of hovered-and-active item</td>
+</tr>
+
+<tr>
+    <td>list_hovered_item_color</td>
+    <td><span class="color_example" style="background-color: #e7f1ff"></span>#e7f1ff</td>
+    <td>Text color of hovered item</td>
+</tr>
+
+<tr>
+    <td>list_comment_color</td>
+    <td><span class="color_example" style="background-color: #7b8aa1"></span>#7b8aa1</td>
+    <td>Text color of header and footer in the list</td>
+</tr>
+
+<tr>
+    <td>footer_border_color</td>
+    <td><span class="color_example" style="background-color: #b5c5d4"></span>#b5c5d4</td>
+    <td>Color of separator line for header and footer</td>
+</tr>
+
+<tr>
+    <td class="subheader" colspan="3">
+        Active state colors
+    </td>
+</tr>
+
+<tr>
+    <td>active_background_color</td>
+    <td><span class="color_example" style="background-color: #faf7e9"></span>#faf7e9</td>
+    <td>Button background color when list is dropped down or on hover</td>
+</tr>
+
+<tr>
+    <td>active_border_color</td>
+    <td><span class="color_example" style="background-color: #eba921"></span>#eba921</td>
+    <td>Button border color</td>
+</tr>
+
+<tr>
+    <td>active_shadow_color</td>
+    <td><span class="color_example" style="background-color: #ffcc00"></span>#ffcc00</td>
+    <td>Shadow color</td>
+</tr>
+
+<tr>
+    <td>active_title_color</td>
+    <td><span class="color_example" style="background-color: #224"></span>#222244</td>
+    <td>Title (top and bottom lines) text color</td>
+</tr>
+
+<tr>
+    <td>active_value_color</td>
+    <td><span class="color_example" style="background-color: #4b3e33"></span>#4b3e33</td>
+    <td>Current value (text in the middle) text color</td>
+</tr>
+
+<tr>
+    <td>active_corner_triangle_color</td>
+    <td><span class="color_example" style="background-color: #eba921"></span>#eba921</td>
+    <td>Triangle (dropdown mark) color</td>
+</tr>
+
+
+</tbody>
+</table>
+
+<p class="download">
+    You can download all the source code from <a href="https://github.com/lexey111/squareSelector">Github</a>.
+</p>
+
+<p class="wbr">
+    With Best Regards
+    <br>
+    <i>Lexey</i><b>111</b>
+</p>
+
+<div class="clearfix"></div>
+</div>
+</div>
+
+<div id="right-bg-pane"></div>
+<div id="left-bg-pane"></div>
+
+<script src="js/jquery-2.0.3.min.js"></script>
+<script src="js/lxSquareSelectors.js"></script>
+<script src="js/ss-examples.js"></script>
+</body>
+</html>

@@ -1,0 +1,602 @@
+/**
+* SquareSelector LESS file
+*
+* (c) Lexey111, 2013
+*/
+
+// CONSTANTS
+// ----------------------------------------------------------------------------------
+// Sizes
+// ----------------------------------------------------------------------------------
+@square_size: 80px;
+// button size
+@border_size: 4px;
+// semitransparent border around dropdown list size
+@corner_triangle_size: 10px;
+// size of triangle in botom right corner
+@top_arrow_size: 8px;
+// size of top arrow on dropdown list
+@button_border_radius_size: 0;
+// roundness of the button's corners
+@list_border_radius_size: 0;
+// roundness of corners of the dropdown list
+@list_item_height: 2.2em;
+// height of list item
+
+// ----------------------------------------------------------------------------------
+// Normal state colors
+// ----------------------------------------------------------------------------------
+@normal_background_color: #f8f8fe;
+// background of the button in normal state (not hovered or opened)
+@normal_border_color: #ddd;
+// square button border
+
+@normal_title_color: #828f94;
+// color of the top text line
+@normal_value_color: #3a778b;
+// color of the centered value
+
+@normal_corner_triangle_color: #aaa;
+// color of bottom right triangle
+
+@list_shadow: 0 0 6px rgba(0, 0, 0, .3);
+// shadow under the list
+
+// ----------------------------------------------------------------------------------
+// Disabled colors
+// ----------------------------------------------------------------------------------
+@disabled_background_color: #f1f1f7;
+// square button background in disabled state
+@disabled_border_color: #e3e3e9;
+// square button border in disabled state
+
+@disabled_title_color: #c0c0c0;
+// color of top text line
+@disabled_value_color: #a2a2a2;
+// color of centered value
+
+@disabled_corner_triangle_color: #d5d5db;
+// color of bottom right triangle
+
+// ----------------------------------------------------------------------------------
+// Dropdown menu colors
+// ----------------------------------------------------------------------------------
+@list_background_color: #fff;
+// background color for dropdown list
+@list_item_color: #2c5a69;
+// text color of list item
+@list_hover_color: #0b697a;
+// color of hovered line
+@list_separor_color: #aaa;
+// separated item bottom border color
+@list_active_border_color: #faa732;
+// color of active (currently selected) item border
+@list_active_background_color: #ffe89b;
+// background color of active (currently selected) item border
+@list_active_text_color: #504c34;
+// text color of active item
+@list_hover_active_color: #90a0c5;
+// background color of hovered and active item
+@list_hovered_item_color: #e7f1ff;
+// text color of hovered item
+@list_comment_color: #7b8aa1;
+// text color of list footer comment
+@list_disabled_text_color: #dde;
+// text color of disabled items
+@footer_border_color: #b5c5d4;
+// line color of footer or other comment
+
+// ----------------------------------------------------------------------------------
+// active state
+// ----------------------------------------------------------------------------------
+@active_background_color: #faf7e9;
+// button background color when list is dropped down or on hover
+@active_border_color: #eba921;
+// border color
+@active_shadow_color: #ffcc00;
+// shadow color
+
+@active_title_color: #224;
+// title (top and bottom lines) text color
+@active_value_color: #4b3e33;
+// value color
+
+@active_corner_triangle_color: #eba921;
+// triangle color
+
+// ----------------------------------------------------------------------------------
+// Functions
+// ----------------------------------------------------------------------------------
+.transparent_border {
+  border: @border_size solid rgba(64, 64, 80, .5);
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border-radius: @list_border_radius_size;
+}
+
+// transition function
+.transit_some(@property: all, @length: 0.2s) {
+  -webkit-transition-property: @property;
+  -moz-transition-property: @property;
+  -ms-transition-property: @property;
+  -o-transition-property: @property;
+  transition-property: @property;
+
+  -webkit-transition-duration: @length;
+  -moz-transition-duration: @length;
+  -ms-transition-duration: @length;
+  -o-transition-duration: @length;
+  transition-duration: @length;
+}
+
+// ----------------------------------------------------------------------------------
+// The control
+// ----------------------------------------------------------------------------------
+.square-select {
+
+  i.triangle{
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  &.disabled, &.disabled:hover {
+    background-color: @disabled_background_color;
+    border: 1px solid @disabled_border_color;
+    box-shadow: none;
+    cursor: default;
+
+    .ss-title, .ss-subtitle {
+      color: @disabled_title_color;
+      cursor: default;
+    }
+    .ss-value {
+      color: @disabled_value_color;
+    }
+    i.triangle {
+      border-bottom-color: @disabled_corner_triangle_color;
+    }
+    a, a:hover, a:focus, a:active {
+      cursor: default;
+      text-decoration: none;
+    }
+    &.ss-open {
+      .square-list {
+        display: none;
+      }
+    }
+  }
+}
+
+.square-select {
+  position: relative;
+  width: @square_size;
+  height: @square_size;
+
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+
+  display: block;
+  float: left;
+  //display: inline-block;
+  //vertical-align: top;
+
+  font-size: 9px;
+  line-height: 9px;
+  text-align: center;
+
+  background-color: @normal_background_color;
+  border: 1px solid @normal_border_color;
+  border-radius: @button_border_radius_size @button_border_radius_size 0 @button_border_radius_size;
+
+  cursor: pointer;
+
+  margin: 0 2px 2px 0;
+
+  .ss-title, .ss-subtitle {
+    // top/bottom text line
+    position: absolute;
+    top: 8px;
+    right: 0;
+    left: 0;
+
+    color: @normal_title_color;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.3em;
+    vertical-align: top;
+    .transit_some('color');
+  }
+
+  .ss-subtitle {
+    bottom: 8px;
+    top: auto;
+  }
+
+  .ss-value {
+    // centerd value
+    position: absolute;
+    top: @square_size / 2 - 7px;
+    left: 2px;
+    right: 2px;
+    display: block;
+    font-size: 14px;
+    line-height: 14px;
+    text-decoration: none;
+    color: @normal_value_color;
+
+    &:active, &:focus, &:hover {
+      text-decoration: underline;
+      outline: none;
+    }
+  }
+
+  i.triangle {
+    // bottom right triangle
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 @corner_triangle_size @corner_triangle_size;
+    border-color: transparent;
+    border-bottom-color: @normal_corner_triangle_color;
+  }
+
+  .square-list {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: -18px;
+    width: 200px;
+    background-color: @list_background_color;
+    border-radius: @list_border_radius_size;
+    z-index: 1010;
+    text-align: left;
+    font-size: 10pt;
+    margin: 0;
+    padding: 8px;
+    box-shadow: @list_shadow;
+    ul {
+      display: block;
+      border-radius: 0;
+      float: none;
+      clear: both;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      li {
+        margin: 0;
+        padding: 0;
+        float: none;
+        display: block;
+        line-height: @list_item_height;
+        height: @list_item_height;
+        width: 100%;
+        border: 1px solid transparent;
+        a {
+          display: inline;
+          float: left;
+          line-height: @list_item_height;
+          height: @list_item_height;
+          width: 100%;
+          margin: 0;
+          padding: 0;
+          text-indent: 1em;
+          text-decoration: none;
+          color: @list_item_color;
+          outline: none;
+        }
+        &.separated {
+          border-bottom-style: dashed;
+          border-bottom-color: @list_separor_color;
+        }
+        &.active {
+          background-color: @list_active_background_color;
+          border-color: @list_active_border_color;
+          border-style: solid;
+          a {
+            font-weight: bold;
+            color: @list_active_text_color;
+          }
+        }
+        & a:active, & a:focus {
+          color: @list_hovered_item_color;
+          background-color: @list_hover_color;
+          text-decoration: underline;
+        }
+        & a:hover {
+          color: @list_hovered_item_color;
+          background-color: lighten(@list_hover_color, 10);
+        }
+        &.active a:hover {
+          color: @list_hovered_item_color;
+          background-color: @list_hover_active_color;
+        }
+
+        &.disabled {
+          background-color: @list_background_color;
+          border-color: @list_background_color;
+          border-style: solid;
+          & a, & a:hover, & a:active, & a:focus {
+            color: @list_disabled_text_color;
+            background-color: @list_background_color;
+            cursor: default;
+          }
+          & a:active, & a:focus {
+            background-color: @list_disabled_text_color;
+            color: @list_background_color;
+          }
+        }
+
+      }
+    }
+    .transparent_border;
+
+    .top-arrow {
+      position: absolute;
+      top: -6px;
+      right: 44px;
+      border-style: solid;
+      border-width: 0 @top_arrow_size 0 @top_arrow_size 0;
+      border-color: transparent;
+      border-bottom-color: @list_background_color;
+    }
+  }
+
+  p.ss-header, p.ss-footer {
+    color: @list_comment_color;
+    padding: 2px 0;
+    margin: 0 0 8px 0;
+    line-height: 1.4em;
+    border-color: @footer_border_color;
+    border-bottom-style: solid;
+    border-width: 1px;
+    cursor: default;
+    font-size: .8em;
+  }
+
+  p.ss-footer {
+    border-bottom-style: none;
+    border-top-style: solid;
+    margin: 0;
+  }
+
+  &:hover, &.ss-open {
+    border-color: @active_border_color;
+    box-shadow: 0 0 4px @active_shadow_color;
+    background-color: @active_background_color;
+
+    i.triangle {
+      border-bottom-color: @active_corner_triangle_color;
+      opacity: 1;
+    }
+    .ss-title, .ss-subtitle {
+      color: @active_title_color;
+    }
+    .ss-value {
+      color: @active_value_color;
+    }
+  }
+  &.ss-open {
+    .square-list {
+      display: block;
+    }
+  }
+  .transit_some('background-color');
+}
+
+// ----------------------------------------------------------------------------------
+// Special
+// ----------------------------------------------------------------------------------
+.giant-button {
+  width: @square_size * 2 + 2; // 2 - margin size
+  height: @square_size * 2 + 2;
+  .ss-value {
+    top: @square_size - 7px;
+  }
+}
+
+.right-float {
+  display: block;
+  float: right;
+}
+
+@-webkit-keyframes webkit-ss-animation {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ss-animation {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@round_border_position: -2px;
+@round_border_size: 3px;
+
+.square-select {
+  &.round-button-animated {
+    border-radius: 100%;
+
+    i.triangle {
+      border: @round_border_size solid transparent;
+      border-right-color: @normal_corner_triangle_color;
+
+      -webkit-transform: rotate(45deg);
+      -moz-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+
+      display: block;
+      position: absolute;
+      top: @round_border_position;
+      left: @round_border_position;
+      right: @round_border_position;
+      bottom: @round_border_position;
+      width: auto;
+      height: auto;
+      border-radius: 100%;
+      .transit_some(border-color, .4s);
+      z-index: 1;
+    }
+
+    &:hover i.triangle {
+      border-right-color: @active_corner_triangle_color;
+      border-left-color: @active_corner_triangle_color;
+
+      animation-name: ss-animation;
+      animation-duration: 2s;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      animation-play-state: running;
+
+      -webkit-animation: webkit-ss-animation 2s linear 0 infinite;
+    }
+  }
+
+  &.rounded-button{
+    border-radius: 16px 16px 0 16px;
+  }
+
+  &.round-button{
+    border-radius: 100%;
+    i.triangle {
+      border-width: @corner_triangle_size / 2 @corner_triangle_size / 2 0 @corner_triangle_size / 2;
+      border-style: solid;
+      border-color: transparent;
+      border-top-color: @normal_corner_triangle_color;
+      left:  (@square_size - @corner_triangle_size) / 2 - 1px;
+      bottom: 1px;
+    }
+  }
+}
+
+// ----------------------------------------------------------------------------------
+// Colored variants
+// ----------------------------------------------------------------------------------
+.green-button {
+  background-color: #75933b;
+  border-color: #75933b;
+  .ss-value {
+    color: #e0ffaa;
+  }
+  .ss-title, .ss-subtitle {
+    color: #bfd691;
+  }
+  i.triangle {
+    border-bottom-color: #aadd5a;
+    right: -1px;
+    bottom: -1px;
+  }
+  .square-list {
+    border-color: rgba(117, 201, 59, 0.58);
+  }
+
+  &:hover, &.ss-open {
+    background-color: #576f2c;
+    border-color: #afc574;
+    box-shadow: 0 0 4px #b5ff0d;
+    .ss-value {
+      color: #fff;
+    }
+    .ss-title, .ss-subtitle {
+      color: #e0ffaa;
+    }
+    i.triangle {
+      border-bottom-color: #e2ff96;
+    }
+  }
+}
+
+.red-button {
+  background-color: #934637;
+  border-color: #934637;
+  .ss-value {
+    color: #ffe681;
+  }
+  .ss-title, .ss-subtitle {
+    color: #d6b794;
+  }
+  i.triangle {
+    border-bottom-color: #d6b794;
+    right: -1px;
+    bottom: -1px;
+  }
+  .square-list {
+    border-color: rgba(201, 63, 21, 0.58);
+  }
+  &:hover, &.ss-open {
+    background-color: #6a3529;
+    border-color: #d16752;
+    box-shadow: 0 0 4px #ff734c;
+    .ss-value {
+      color: #fff;
+    }
+    .ss-title, .ss-subtitle {
+      color: #ffe5b4;
+    }
+    i.triangle {
+      border-bottom-color: #d16752;
+    }
+  }
+
+}
+
+.blue-button {
+  background-color: #3c73b2;
+  border-color: #396ca8;
+  .ss-value {
+    color: #d5f5ff;
+  }
+  .ss-title, .ss-subtitle {
+    color: #b8c7d6;
+  }
+  i.triangle {
+    border-bottom-color: #96a7d6;
+    right: -1px;
+    bottom: -1px;
+  }
+
+  .square-list {
+    border-color: rgba(74, 128, 201, 0.58);
+  }
+
+  &:hover, &.ss-open {
+    background-color: #345c93;
+    border-color: #51687a;
+    box-shadow: 0 0 4px #58a1ff;
+
+    .ss-value {
+      color: #fff;
+    }
+    .ss-title, .ss-subtitle {
+      color: #d5e8ff;
+    }
+    i.triangle {
+      border-bottom-color: #8ea9d1;
+    }
+  }
+}
